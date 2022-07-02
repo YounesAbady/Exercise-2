@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\exercise-2\\Backend\\Backend\\Backend.csproj": {}
+    "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\exercise-2\\Backend\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "D:\\exercise-2\\Backend\\Backend\\Backend.csproj": {
+    "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\exercise-2\\Backend\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\exercise-2\\Backend\\Backend\\Backend.csproj",
+        "projectUniqueName": "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\exercise-2\\Backend\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "D:\\exercise-2\\Backend\\Backend\\Backend.csproj",
+        "projectPath": "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\exercise-2\\Backend\\Backend\\Backend.csproj",
         "packagesPath": "C:\\Users\\youne\\.nuget\\packages\\",
-        "outputPath": "D:\\exercise-2\\Backend\\Backend\\obj\\",
+        "outputPath": "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\exercise-2\\Backend\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\youne\\AppData\\Roaming\\NuGet\\NuGet.Config",

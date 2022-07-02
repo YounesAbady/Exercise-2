@@ -446,11 +446,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\exercise-2\\exercise-1\\exercise-1.csproj",
+      "projectUniqueName": "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\exercise-2\\exercise-1\\exercise-1.csproj",
       "projectName": "exercise-1",
-      "projectPath": "D:\\exercise-2\\exercise-1\\exercise-1.csproj",
+      "projectPath": "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\exercise-2\\exercise-1\\exercise-1.csproj",
       "packagesPath": "C:\\Users\\youne\\.nuget\\packages\\",
-      "outputPath": "D:\\exercise-2\\exercise-1\\obj\\",
+      "outputPath": "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\exercise-2\\exercise-1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\youne\\AppData\\Roaming\\NuGet\\NuGet.Config",

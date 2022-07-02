@@ -49,22 +49,22 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                         //DataHandler.AddRecipe();
                         break;
                     case "For listing categories":
-                        var xrequest = client.GetStringAsync("https://localhost:7018/api/ListCategories");
-                        var yresponse = xrequest.Result;
+                        var listRequest = client.GetStringAsync("https://localhost:7018/api/ListCategories");
+                        var listResponse = listRequest.Result;
 
-                        if (yresponse is not null)
+                        if (listResponse is not null)
                         {
-                            var result = JsonSerializer.Deserialize<List<string>>(yresponse, options);
+                            var result = JsonSerializer.Deserialize<List<string>>(listResponse, options);
                             Categories.ListCategories(result);
                         }
                         break;
                     case "For listing recipes":
-                        var zrequest = client.GetStringAsync("https://localhost:7018/api/ListRecipes");
-                        var zresponse = zrequest.Result;
+                        listRequest = client.GetStringAsync("https://localhost:7018/api/ListRecipes");
+                        listResponse = listRequest.Result;
 
-                        if (zresponse is not null)
+                        if (listResponse is not null)
                         {
-                            var result = JsonSerializer.Deserialize<List<Recipe>>(zresponse, options);
+                            var result = JsonSerializer.Deserialize<List<Recipe>>(listResponse, options);
                             DataHandler.ListRecipes(result);
                         }
                         break;
