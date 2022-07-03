@@ -10,7 +10,7 @@ namespace exercise_1.Models
 {
     internal class Categories
     {
-        //public static List<string> CategoriesNames { get; set; } = new List<string>();
+        public static List<string> CategoriesNames { get; set; } = new List<string>();
 
         //public static void AddCategory()
         //{

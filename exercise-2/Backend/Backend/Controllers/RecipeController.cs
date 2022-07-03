@@ -36,10 +36,20 @@ namespace Backend.Controllers
         public void AddCategory(string category)
         {
             _CategoriesNames.Add(category);
-            //string fileName = @"C:\Users\youne\source\repos\exercise-1\exercise-1\Recipes.json";
             string startupPath = Environment.CurrentDirectory;
             string fileName = @$"{startupPath}\Categories.json";
             string jsonString = JsonSerializer.Serialize(_CategoriesNames);
+            File.WriteAllText(fileName, jsonString);
+        }
+        [HttpPost]
+        [Route("api/AddRecipe/{jsonRecipe}")]
+        public void AddRecipe(string jsonRecipe)
+        {
+            Recipe recipe=JsonSerializer.Deserialize<Recipe>(jsonRecipe);
+            _Recipes.Add(recipe);
+            string startupPath = Environment.CurrentDirectory;
+            string fileName = @$"{startupPath}\Recipes.json";
+            string jsonString = JsonSerializer.Serialize(_Recipes);
             File.WriteAllText(fileName, jsonString);
         }
     }

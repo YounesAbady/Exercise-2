@@ -37,20 +37,61 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                     case "For adding a category":
                         Console.WriteLine("Enter Category name :");
                         var category = Console.ReadLine();
-                        var jsonCategory =JsonSerializer.Serialize(category);
-                        var content = new StringContent(jsonCategory, Encoding.UTF8,"application/json");
-                        var request = client.PostAsync($"https://localhost:7018/api/AddCategory/{category}",content);
+                        var jsonCategory = JsonSerializer.Serialize(category);
+                        var content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
+                        var request = client.PostAsync($"https://localhost:7018/api/AddCategory/{category}", content);
                         var response = request.Result;
                         if (request.IsCompletedSuccessfully)
-                            Console.WriteLine("Done!");
-                        //Categories.AddCategory();
+                            Console.WriteLine("[green]Done![/]");
                         break;
                     case "For adding a recipe":
-                        //DataHandler.AddRecipe();
-                        break;
-                    case "For listing categories":
+                        Recipe recipe = new Recipe();
+                        Console.WriteLine("Enter recipe name");
+                        recipe.Title = Console.ReadLine();
+                        for (counter = 1; input != "x"; counter++)
+                        {
+                            Console.WriteLine($"Enter ingredient number {counter} or x to go to the next step");
+                            input = Console.ReadLine();
+                            if (input == "x") break;
+                            recipe.Ingredients.Add(input);
+                        }
+                        input = null;
+
+                        for (counter = 1; input != "x"; counter++)
+                        {
+                            Console.WriteLine($"Enter instruction number {counter} or x to go to the next step");
+                            input = Console.ReadLine();
+                            if (input == "x") break;
+                            recipe.Instructions.Add(input);
+                        }
                         var listRequest = client.GetStringAsync("https://localhost:7018/api/ListCategories");
                         var listResponse = listRequest.Result;
+
+                        if (listResponse is not null)
+                        {
+                            var result = JsonSerializer.Deserialize<List<string>>(listResponse, options);
+                            Categories.ListCategories(result);
+                            input = null;
+                            while (input != "x")
+                            {
+                                Console.WriteLine("Enter Category number from list or x to go to the next step");
+                                input = Console.ReadLine();
+                                if (input == "x") break;
+                                recipe.Categories.Add(result[int.Parse(input) - 1]);
+                            }
+                        }
+
+                        input = null;
+                        var jsonRecipe = JsonSerializer.Serialize(recipe);
+                        content = new StringContent(jsonRecipe, Encoding.UTF8, "application/json");
+                        request = client.PostAsync($"https://localhost:7018/api/AddRecipe/{jsonRecipe}", content);
+                        response = request.Result;
+                        if (request.IsCompletedSuccessfully)
+                            Console.WriteLine("[green]Done![/]");
+                        break;
+                    case "For listing categories":
+                        listRequest = client.GetStringAsync("https://localhost:7018/api/ListCategories");
+                        listResponse = listRequest.Result;
 
                         if (listResponse is not null)
                         {
@@ -80,7 +121,7 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                         //DataHandler.EditRecipe();
                         break;
                     default:
-                        Console.WriteLine("Enter a valid option!");
+                        Console.WriteLine("[red]Enter a valid option![/]");
                         break;
                 }
 
@@ -96,7 +137,6 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
 
         }));
                 Console.Clear();
-                //userInput = Console.ReadLine();
             }
 
         }
