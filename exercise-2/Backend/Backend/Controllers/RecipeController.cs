@@ -52,5 +52,25 @@ namespace Backend.Controllers
             string jsonString = JsonSerializer.Serialize(_Recipes);
             File.WriteAllText(fileName, jsonString);
         }
+        [HttpDelete]
+        [Route("api/DeleteCategory/{category}")]
+        public void DeleteCategory(string category)
+        {
+            _CategoriesNames.Remove(category);
+            string startupPath = Environment.CurrentDirectory;
+            string fileName = @$"{startupPath}\Categories.json";
+            string jsonString = JsonSerializer.Serialize(_CategoriesNames);
+            File.WriteAllText(fileName, jsonString);
+        }
+        [HttpPut]
+        [Route("api/UpdateCategory/{position}/{newCategory}")]
+        public void UpdateCategory(string position,string newCategory)
+        {
+            _CategoriesNames[int.Parse(position)-1] =newCategory;
+            string startupPath = Environment.CurrentDirectory;
+            string fileName = @$"{startupPath}\Categories.json";
+            string jsonString = JsonSerializer.Serialize(_CategoriesNames);
+            File.WriteAllText(fileName, jsonString);
+        }
     }
 }

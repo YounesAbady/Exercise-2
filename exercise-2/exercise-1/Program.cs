@@ -15,8 +15,6 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
-            //DataHandler.Deserialize();
-            //Categories.Deserialize();
             var userInput = AnsiConsole.Prompt(
     new SelectionPrompt<string>()
         .Title("What's your [green]option[/]?")
@@ -42,7 +40,7 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                         var request = client.PostAsync($"https://localhost:7018/api/AddCategory/{category}", content);
                         var response = request.Result;
                         if (request.IsCompletedSuccessfully)
-                            Console.WriteLine("[green]Done![/]");
+                            Console.WriteLine("Done!\n\n");
                         break;
                     case "For adding a recipe":
                         Recipe recipe = new Recipe();
@@ -87,7 +85,7 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                         request = client.PostAsync($"https://localhost:7018/api/AddRecipe/{jsonRecipe}", content);
                         response = request.Result;
                         if (request.IsCompletedSuccessfully)
-                            Console.WriteLine("[green]Done![/]");
+                            Console.WriteLine("Done!\n\n");
                         break;
                     case "For listing categories":
                         listRequest = client.GetStringAsync("https://localhost:7018/api/ListCategories");
@@ -110,11 +108,37 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                         }
                         break;
                     case "For Editing categories":
-                        //Categories.EditCategory();
+                        input = null;
+                        listRequest = client.GetStringAsync("https://localhost:7018/api/ListCategories");
+                        listResponse = listRequest.Result;
+
+                        if (listResponse is not null)
+                        {
+                            var result = JsonSerializer.Deserialize<List<string>>(listResponse, options);
+                            Categories.ListCategories(result);
+                            Console.WriteLine("Please select number of category to edit");
+                            input = Console.ReadLine();
+                            Console.WriteLine("If you want to delete it enter x or enter new name to edit it");
+                            string newName = Console.ReadLine();
+                            if (newName == "x")
+                            {
+                                request = client.DeleteAsync($"https://localhost:7018/api/DeleteCategory/{result[int.Parse(input) - 1]}");
+                                response = request.Result;
+                                if (request.IsCompletedSuccessfully)
+                                    Console.WriteLine("Done!\n\n");
+                            }
+                            else
+                            {
+                                jsonCategory = JsonSerializer.Serialize(newName);
+                                content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
+                                request = client.PutAsync($"https://localhost:7018/api/UpdateCategory/{input}/{newName}", content);
+                                response = request.Result;
+                                if (request.IsCompletedSuccessfully)
+                                    Console.WriteLine("Done!\n\n");
+                            }
+                        }
                         break;
                     case "Close the application":
-                        //DataHandler.Serialize();
-                        //Categories.Serialize();
                         Environment.Exit(0);
                         break;
                     case "For editing Recipes":
@@ -125,7 +149,6 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                         break;
                 }
 
-                //Console.WriteLine("Enter number for new opreation or x for closing the app");
                 userInput = AnsiConsole.Prompt(
     new SelectionPrompt<string>()
         .Title("What's your [green]option[/]?")
