@@ -1,2 +1,2 @@
 # Exercise-2
-i made this for testing
+Make sure you run server first !
