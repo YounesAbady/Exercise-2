@@ -1,8 +1,7 @@
 ﻿global using Spectre.Console;
-using Client;
 using System.Text;
 using System.Text.Json;
-namespace exercise_1 // Note: actual namespace depends on the project name.
+namespace Client // Note: actual namespace depends on the project name.
 {
     internal class Program
     {
@@ -37,7 +36,7 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                         var category = Console.ReadLine();
                         var jsonCategory = JsonSerializer.Serialize(category);
                         var content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
-                        var request = client.PostAsync($"https://localhost:7018/api/AddCategory/{category}", content);
+                        var request = client.PostAsync($"https://localhost:7018/api/add-category/{category}", content);
                         var response = request.Result;
                         if (request.IsCompletedSuccessfully)
                             Console.WriteLine("Done!\n\n");
@@ -62,7 +61,7 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                             if (input == "x") break;
                             recipe.Instructions.Add(input);
                         }
-                        var listRequest = client.GetStringAsync("https://localhost:7018/api/ListCategories");
+                        var listRequest = client.GetStringAsync("https://localhost:7018/api/list-categories");
                         var listResponse = listRequest.Result;
 
                         if (listResponse is not null)
@@ -82,13 +81,13 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                         input = null;
                         var jsonRecipe = JsonSerializer.Serialize(recipe);
                         content = new StringContent(jsonRecipe, Encoding.UTF8, "application/json");
-                        request = client.PostAsync($"https://localhost:7018/api/AddRecipe/{jsonRecipe}", content);
+                        request = client.PostAsync($"https://localhost:7018/api/add-recipe/{jsonRecipe}", content);
                         response = request.Result;
                         if (request.IsCompletedSuccessfully)
                             Console.WriteLine("Done!\n\n");
                         break;
                     case "For listing categories":
-                        listRequest = client.GetStringAsync("https://localhost:7018/api/ListCategories");
+                        listRequest = client.GetStringAsync("https://localhost:7018/api/list-categories");
                         listResponse = listRequest.Result;
 
                         if (listResponse is not null)
@@ -98,7 +97,7 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                         }
                         break;
                     case "For listing recipes":
-                        listRequest = client.GetStringAsync("https://localhost:7018/api/ListRecipes");
+                        listRequest = client.GetStringAsync("https://localhost:7018/api/list-recipes");
                         listResponse = listRequest.Result;
 
                         if (listResponse is not null)
@@ -109,7 +108,7 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                         break;
                     case "For Editing categories":
                         input = null;
-                        listRequest = client.GetStringAsync("https://localhost:7018/api/ListCategories");
+                        listRequest = client.GetStringAsync("https://localhost:7018/api/list-categories");
                         listResponse = listRequest.Result;
 
                         if (listResponse is not null)
@@ -122,7 +121,7 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                             string newName = Console.ReadLine();
                             if (newName == "x")
                             {
-                                request = client.DeleteAsync($"https://localhost:7018/api/DeleteCategory/{result[int.Parse(input) - 1]}");
+                                request = client.DeleteAsync($"https://localhost:7018/api/delete-category/{result[int.Parse(input) - 1]}");
                                 response = request.Result;
                                 if (request.IsCompletedSuccessfully)
                                     Console.WriteLine("Done!\n\n");
@@ -131,7 +130,7 @@ namespace exercise_1 // Note: actual namespace depends on the project name.
                             {
                                 jsonCategory = JsonSerializer.Serialize(newName);
                                 content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
-                                request = client.PutAsync($"https://localhost:7018/api/UpdateCategory/{input}/{newName}", content);
+                                request = client.PutAsync($"https://localhost:7018/api/update-category/{input}/{newName}", content);
                                 response = request.Result;
                                 if (request.IsCompletedSuccessfully)
                                     Console.WriteLine("Done!\n\n");

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "z61RBdNOl1q//SzVmANd8uVYMjhuM7YaeYPy2Ox53s1A0VIGSqRyduiw4XXefnmXjviPVxBbpvm1QjxTUcXWzg==",
+  "dgSpecHash": "dAfTu4CyExfDYhmgfrw4QQqBWKWAa/4DBjD+h8g5kb2wxd/+kWd143GCyGgw4X74swh+bwdbd7q5fIACLwu6IA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\Client\\Client\\Client.csproj",
+  "projectFilePath": "D:\\Finall\\exercise-2\\Client\\Client\\Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\youne\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\youne\\.nuget\\packages\\spectre.console\\0.44.0\\spectre.console.0.44.0.nupkg.sha512"

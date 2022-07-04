@@ -11,6 +11,7 @@ namespace Client
     {
         public Recipe()
         {
+            Id =  Guid.NewGuid();
         }
         public Recipe(string title, List<string> ingredients, List<string> instructions, List<string> categories)
         {
@@ -19,6 +20,9 @@ namespace Client
             Instructions = instructions;
             Categories = categories;
         }
+
+        [JsonProperty("Id")]
+        public Guid Id { get; set; }
         [JsonProperty("Title")]
         public string Title { get; set; } = string.Empty;
         [JsonProperty("Ingredients")]
