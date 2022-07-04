@@ -44,7 +44,7 @@ namespace Backend.Controllers
         [Route("api/add-recipe/{jsonRecipe}")]
         public void AddRecipe(string jsonRecipe)
         {
-            Recipe recipe=JsonSerializer.Deserialize<Recipe>(jsonRecipe);
+            Recipe recipe = JsonSerializer.Deserialize<Recipe>(jsonRecipe);
             _Recipes.Add(recipe);
             string startupPath = Environment.CurrentDirectory;
             string fileName = @$"{startupPath}\Recipes.json";
@@ -56,7 +56,7 @@ namespace Backend.Controllers
         public void DeleteCategory(string category)
         {
             _CategoriesNames.Remove(category);
-            foreach (Recipe recipe in _Recipes) 
+            foreach (Recipe recipe in _Recipes)
             {
                 if (recipe.Categories.Contains(category))
                     recipe.Categories.Remove(category);
@@ -71,17 +71,16 @@ namespace Backend.Controllers
         }
         [HttpPut]
         [Route("api/update-category/{position}/{newCategory}")]
-        public void UpdateCategory(string position,string newCategory)
+        public void UpdateCategory(string position, string newCategory)
         {
-            foreach (Recipe recipe in _Recipes) 
+            foreach (Recipe recipe in _Recipes)
             {
                 if (recipe.Categories.Contains(_CategoriesNames[int.Parse(position) - 1]))
                 {
                     recipe.Categories[recipe.Categories.IndexOf(_CategoriesNames[int.Parse(position) - 1])] = newCategory;
                 }
             }
-            _CategoriesNames[int.Parse(position)-1] =newCategory;
-
+            _CategoriesNames[int.Parse(position) - 1] = newCategory;
             string startupPath = Environment.CurrentDirectory;
             string fileName = @$"{startupPath}\Categories.json";
             string jsonString = JsonSerializer.Serialize(_CategoriesNames);
@@ -89,6 +88,39 @@ namespace Backend.Controllers
             fileName = @$"{startupPath}\Recipes.json";
             jsonString = JsonSerializer.Serialize(_Recipes);
             File.WriteAllText(fileName, jsonString);
+        }
+        [HttpDelete]
+        [Route("api/delete-recipe/{id}")]
+        public void DeleteRecipe(Guid id)
+        {
+            Recipe recipe = _Recipes.FirstOrDefault(x => x.Id == id);
+            _Recipes.Remove(recipe);
+            string startupPath = Environment.CurrentDirectory;
+            var fileName = @$"{startupPath}\Recipes.json";
+            var jsonString = JsonSerializer.Serialize(_Recipes);
+            File.WriteAllText(fileName, jsonString);
+        }
+        [HttpPut]
+        [Route("api/update-recipe/{jsonRecipe}/{id}")]
+        public void UpdateRecipe(string jsonRecipe,Guid id)
+        {
+            Recipe oldRecipe = _Recipes.FirstOrDefault(x => x.Id == id);
+            Recipe newRecipe = JsonSerializer.Deserialize<Recipe>(jsonRecipe);
+            oldRecipe.Title = newRecipe.Title;
+            oldRecipe.Categories = newRecipe.Categories;
+            oldRecipe.Ingredients = newRecipe.Ingredients;
+            oldRecipe.Instructions = newRecipe.Instructions;
+            string startupPath = Environment.CurrentDirectory;
+            var fileName = @$"{startupPath}\Recipes.json";
+            var jsonString = JsonSerializer.Serialize(_Recipes);
+            File.WriteAllText(fileName, jsonString);
+        }
+        [HttpGet]
+        [Route("api/get-recipe/{id}")]
+        public Recipe GetRecipe(Guid id) 
+        {
+            var recipe = _Recipes.FirstOrDefault(x => x.Id == id);
+            return recipe;
         }
     }
 }
