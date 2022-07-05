@@ -102,7 +102,7 @@ namespace Backend.Controllers
         }
         [HttpPut]
         [Route("api/update-recipe/{jsonRecipe}/{id}")]
-        public void UpdateRecipe(string jsonRecipe,Guid id)
+        public void UpdateRecipe(string jsonRecipe, Guid id)
         {
             Recipe oldRecipe = _Recipes.FirstOrDefault(x => x.Id == id);
             Recipe newRecipe = JsonSerializer.Deserialize<Recipe>(jsonRecipe);
@@ -117,7 +117,7 @@ namespace Backend.Controllers
         }
         [HttpGet]
         [Route("api/get-recipe/{id}")]
-        public Recipe GetRecipe(Guid id) 
+        public Recipe GetRecipe(Guid id)
         {
             var recipe = _Recipes.FirstOrDefault(x => x.Id == id);
             return recipe;

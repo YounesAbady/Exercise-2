@@ -11,7 +11,7 @@ namespace Client
     {
         public Recipe()
         {
-            Id =  Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
         public Recipe(string title, List<string> ingredients, List<string> instructions, List<string> categories)
         {

@@ -7,13 +7,6 @@ namespace Client // Note: actual namespace depends on the project name.
     {
         static void Main(string[] args)
         {
-            var client = new HttpClient();
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
-            };
             var userInput = AnsiConsole.Prompt(
     new SelectionPrompt<string>()
         .Title("What's your [green]option[/]?")
@@ -21,7 +14,7 @@ namespace Client // Note: actual namespace depends on the project name.
         .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
         .AddChoices(new[] {
                     "For adding a category", "For adding a recipe", "For listing categories",
-                    "For listing recipes", "For Editing categories","For editing Recipes","[red]Close the application[/]"
+                    "For listing recipes", "For editing categories","For editing recipes","[red]Close the application[/]"
 
         }));
             string input = null;
@@ -43,13 +36,13 @@ namespace Client // Note: actual namespace depends on the project name.
                     case "For listing recipes":
                         DataHandler.ListRecipesWeb();
                         break;
-                    case "For Editing categories":
+                    case "For editing categories":
                         Categories.EditCategories();
                         break;
                     case "[red]Close the application[/]":
                         Environment.Exit(0);
                         break;
-                    case "For editing Recipes":
+                    case "For editing recipes":
                         DataHandler.EditRecipes();
                         break;
                     default:
@@ -64,7 +57,7 @@ namespace Client // Note: actual namespace depends on the project name.
         .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
         .AddChoices(new[] {
             "For adding a category", "For adding a recipe", "For listing categories",
-            "For listing recipes", "For Editing categories","For editing Recipes","[red]Close the application[/]"
+            "For listing recipes", "For editing categories","For editing recipes","[red]Close the application[/]"
 
         }));
                 Console.Clear();

@@ -24,7 +24,7 @@ namespace Client
             // Render the tree
             AnsiConsole.Write(root);
         }
-        public static void EditCategories() 
+        public static void EditCategories()
         {
             var options = new JsonSerializerOptions
             {
@@ -33,7 +33,7 @@ namespace Client
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
             var client = new HttpClient();
-            string input=null;
+            string input = null;
             var listRequest = client.GetStringAsync("https://localhost:7018/api/list-categories");
             var listResponse = listRequest.Result;
 
