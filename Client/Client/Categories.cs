@@ -12,6 +12,7 @@ namespace Client
         public static List<string> CategoriesNames { get; set; } = new List<string>();
         public static void ListCategories(List<string> categories)
         {
+            ArgumentNullException.ThrowIfNull(categories);
             int counter = 1;
             // Create the tree
             var root = new Tree("Categories");
@@ -44,6 +45,8 @@ namespace Client
                 input = Console.ReadLine();
                 Console.WriteLine("If you want to delete it enter x or enter new name to edit it");
                 string newName = Console.ReadLine();
+                if (string.IsNullOrEmpty(newName))
+                    throw new InvalidOperationException("Cant be empty");
                 if (newName == "x")
                 {
                     var request = client.DeleteAsync($"{_baseAdress}/api/delete-category/{result[int.Parse(input) - 1]}");

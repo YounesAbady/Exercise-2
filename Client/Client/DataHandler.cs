@@ -12,6 +12,7 @@ namespace Client
         private static string _baseAdress = "https://localhost:7018";
         public static void ListRecipesUi(List<Recipe> recipes)
         {
+            ArgumentNullException.ThrowIfNull(recipes);
             int recipesCounter = 1;
             var root = new Tree("[lime]Recipes[/]");
             foreach (Recipe recipe in recipes)
@@ -46,6 +47,8 @@ namespace Client
         {
             Console.WriteLine("Enter Category name :");
             var category = Console.ReadLine();
+            if (string.IsNullOrEmpty(category))
+                throw new InvalidOperationException("Cant be empty");
             var client = new HttpClient();
             var jsonCategory = JsonSerializer.Serialize(category);
             var content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
@@ -67,10 +70,14 @@ namespace Client
             Recipe recipe = new Recipe();
             Console.WriteLine("Enter recipe name");
             recipe.Title = Console.ReadLine();
+            if (string.IsNullOrEmpty(recipe.Title))
+                throw new InvalidOperationException("Cant be empty");
             for (counter = 1; input != "x"; counter++)
             {
                 Console.WriteLine($"Enter ingredient number {counter} or x to go to the next step");
                 input = Console.ReadLine();
+                if (string.IsNullOrEmpty(input))
+                    throw new InvalidOperationException("Cant be empty");
                 if (input == "x") break;
                 recipe.Ingredients.Add(input);
             }
@@ -79,6 +86,8 @@ namespace Client
             {
                 Console.WriteLine($"Enter instruction number {counter} or x to go to the next step");
                 input = Console.ReadLine();
+                if (string.IsNullOrEmpty(input))
+                    throw new InvalidOperationException("Cant be empty");
                 if (input == "x") break;
                 recipe.Instructions.Add(input);
             }
@@ -93,6 +102,8 @@ namespace Client
                 {
                     Console.WriteLine("Enter Category number from list or x to go to the next step");
                     input = Console.ReadLine();
+                    if (string.IsNullOrEmpty(input))
+                        throw new InvalidOperationException("Cant be empty");
                     if (input == "x") break;
                     recipe.Categories.Add(result[int.Parse(input) - 1]);
                 }
@@ -172,6 +183,8 @@ namespace Client
                     case "Title":
                         Console.WriteLine("Enter New Title");
                         oldRecipe.Title = Console.ReadLine();
+                        if (string.IsNullOrEmpty(oldRecipe.Title))
+                            throw new InvalidOperationException("Cant be empty");
                         break;
                     case "Ingredients":
                         counter = 1;
@@ -182,10 +195,14 @@ namespace Client
                         }
                         Console.WriteLine("Enter the number you want to edit or enter add for new ingerdient");
                         var input = Console.ReadLine();
+                        if (string.IsNullOrEmpty(input))
+                            throw new InvalidOperationException("Cant be empty");
                         if (input.Equals("add"))
                         {
                             Console.WriteLine("Enter new ingerdient");
                             string newData = Console.ReadLine();
+                            if (string.IsNullOrEmpty(newData))
+                                throw new InvalidOperationException("Cant be empty");
                             oldRecipe.Ingredients.Add(newData);
                         }
                         else
@@ -193,6 +210,8 @@ namespace Client
                             var oldIngerdient = oldRecipe.Ingredients[int.Parse(input) - 1];
                             Console.WriteLine("Enter new name or x to delete it");
                             string newData = Console.ReadLine();
+                            if (string.IsNullOrEmpty(newData))
+                                throw new InvalidOperationException("Cant be empty");
                             if (newData.Equals("x"))
                                 oldRecipe.Ingredients.Remove(oldIngerdient);
                             else
@@ -212,6 +231,8 @@ namespace Client
                         {
                             Console.WriteLine("Enter new instruction");
                             string newData = Console.ReadLine();
+                            if (string.IsNullOrEmpty(newData))
+                                throw new InvalidOperationException("Cant be empty");
                             oldRecipe.Instructions.Add(newData);
                         }
                         else
@@ -219,6 +240,8 @@ namespace Client
                             var oldInstruction = oldRecipe.Instructions[int.Parse(input) - 1];
                             Console.WriteLine("Enter new name or x to delete it");
                             string newData = Console.ReadLine();
+                            if (string.IsNullOrEmpty(newData))
+                                throw new InvalidOperationException("Cant be empty");
                             if (newData.Equals("x"))
                                 oldRecipe.Instructions.Remove(oldInstruction);
                             else
