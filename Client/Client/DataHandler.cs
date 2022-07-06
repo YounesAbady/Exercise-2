@@ -45,8 +45,11 @@ namespace Client
             int recipesCounter = 1;
             var table = new Table();
             table.Centered();
-            table.Expand();
-            table.Title = new TableTitle("[green]Recipes[/]");
+            table.Collapse();
+            AnsiConsole.Write(
+    new FigletText("Recipes")
+        .Centered()
+        .Color(Color.Green));
             table.AddColumn(new TableColumn("[aqua]Title[/]").Centered());
             table.AddColumn(new TableColumn("[aqua]Ingredients[/]").Centered());
             table.AddColumn(new TableColumn("[aqua]Instructions[/]").Centered());
@@ -77,13 +80,14 @@ namespace Client
                 }
                 table.AddRow($"{recipesCounter} - {recipe.Title}", ingredients.ToString(), instructions.ToString(), categories.ToString());
                 table.AddEmptyRow();
+                table.AddRow("___________", "___________", "___________", "___________");
                 recipesCounter++;
             }
             AnsiConsole.Write(table);
         }
         public static void AddCategory()
         {
-            Console.WriteLine("Enter Category name :");
+            AnsiConsole.Write(new Markup("Enter category [aqua]name :[/]"));
             var category = Console.ReadLine();
             if (string.IsNullOrEmpty(category))
                 throw new InvalidOperationException("Cant be empty");
@@ -106,13 +110,13 @@ namespace Client
             var client = new HttpClient();
             string input = null;
             Recipe recipe = new Recipe();
-            Console.WriteLine("Enter recipe name");
+            AnsiConsole.Write(new Markup("Enter recipe [aqua]name :[/]"));
             recipe.Title = Console.ReadLine();
             if (string.IsNullOrEmpty(recipe.Title))
                 throw new InvalidOperationException("Cant be empty");
             for (counter = 1; input != "x"; counter++)
             {
-                Console.WriteLine($"Enter ingredient number {counter} or x to go to the next step");
+                AnsiConsole.Write(new Markup($"Enter ingredient number {counter} or [red]x[/] to go to the next step:"));
                 input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))
                     throw new InvalidOperationException("Cant be empty");
@@ -122,7 +126,7 @@ namespace Client
             input = null;
             for (counter = 1; input != "x"; counter++)
             {
-                Console.WriteLine($"Enter instruction number {counter} or x to go to the next step");
+                AnsiConsole.Write(new Markup($"Enter instruction number {counter} or [red]x[/] to go to the next step:"));
                 input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))
                     throw new InvalidOperationException("Cant be empty");
@@ -138,7 +142,7 @@ namespace Client
                 input = null;
                 while (input != "x")
                 {
-                    Console.WriteLine("Enter Category number from list or x to go to the next step");
+                    AnsiConsole.Write(new Markup($"Enter category number {counter} or [red]x[/] to go to the next step:"));
                     input = Console.ReadLine();
                     if (string.IsNullOrEmpty(input))
                         throw new InvalidOperationException("Cant be empty");
@@ -192,7 +196,7 @@ namespace Client
         {
             bool deleted = false;
             ListRecipesWeb();
-            Console.WriteLine("Enter the number of recipe you want to edit");
+            AnsiConsole.Write(new Markup("Enter the number of recipe you want to [green]edit:[/]"));
             int recipeNumber = int.Parse(Console.ReadLine()) - 1;
             var options = new JsonSerializerOptions
             {
@@ -219,7 +223,7 @@ namespace Client
                 switch (userInput)
                 {
                     case "Title":
-                        Console.WriteLine("Enter New Title");
+                        AnsiConsole.Write(new Markup("Enter new [green]title:[/]"));
                         oldRecipe.Title = Console.ReadLine();
                         if (string.IsNullOrEmpty(oldRecipe.Title))
                             throw new InvalidOperationException("Cant be empty");
@@ -231,13 +235,13 @@ namespace Client
                             Console.WriteLine($"{counter}-{ingerdient} \n");
                             counter++;
                         }
-                        Console.WriteLine("Enter the number you want to edit or enter add for new ingerdient");
+                        AnsiConsole.Write(new Markup("Enter the number you want to [green]edit[/] or enter [green]add[/] for new ingerdient:"));
                         var input = Console.ReadLine();
                         if (string.IsNullOrEmpty(input))
                             throw new InvalidOperationException("Cant be empty");
                         if (input.Equals("add"))
                         {
-                            Console.WriteLine("Enter new ingerdient");
+                            AnsiConsole.Write(new Markup("Enter new [green]ingerdient:[/]"));
                             string newData = Console.ReadLine();
                             if (string.IsNullOrEmpty(newData))
                                 throw new InvalidOperationException("Cant be empty");
@@ -246,7 +250,7 @@ namespace Client
                         else
                         {
                             var oldIngerdient = oldRecipe.Ingredients[int.Parse(input) - 1];
-                            Console.WriteLine("Enter new name or x to delete it");
+                            AnsiConsole.Write(new Markup("Enter new name or [red]x to delete it:[/]"));
                             string newData = Console.ReadLine();
                             if (string.IsNullOrEmpty(newData))
                                 throw new InvalidOperationException("Cant be empty");
@@ -263,11 +267,11 @@ namespace Client
                             Console.WriteLine($"{counter}-{instruction} \n");
                             counter++;
                         }
-                        Console.WriteLine("Enter the number you want to edit or enter add for new instruction");
+                        AnsiConsole.Write(new Markup("Enter the number you want to [green]edit[/] or enter [green]add[/] for new instruction:"));
                         input = Console.ReadLine();
                         if (input.Equals("add"))
                         {
-                            Console.WriteLine("Enter new instruction");
+                            AnsiConsole.Write(new Markup("Enter new [green]instruction:[/]"));
                             string newData = Console.ReadLine();
                             if (string.IsNullOrEmpty(newData))
                                 throw new InvalidOperationException("Cant be empty");
@@ -276,7 +280,7 @@ namespace Client
                         else
                         {
                             var oldInstruction = oldRecipe.Instructions[int.Parse(input) - 1];
-                            Console.WriteLine("Enter new name or x to delete it");
+                            AnsiConsole.Write(new Markup("Enter new [green]name[/] or [red]x to delete it[/]:"));
                             string newData = Console.ReadLine();
                             if (string.IsNullOrEmpty(newData))
                                 throw new InvalidOperationException("Cant be empty");
@@ -293,12 +297,12 @@ namespace Client
                             Console.WriteLine($"{counter}-{category} \n");
                             counter++;
                         }
-                        Console.WriteLine("Enter the number you want to delete or enter add for new category");
+                        AnsiConsole.Write(new Markup("Enter the [green]number[/] you want to [red]delete[/] or enter add for new category:"));
                         input = Console.ReadLine();
                         if (input.Equals("add"))
                         {
                             ListCategories();
-                            Console.WriteLine("Enter Category number from list");
+                            AnsiConsole.Write(new Markup("Enter [green]category[/] number from list:"));
                             string newData = Console.ReadLine();
                             oldRecipe.Categories.Add(Categories.CategoriesNames[int.Parse(newData) - 1]);
                         }

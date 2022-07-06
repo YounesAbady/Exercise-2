@@ -7,6 +7,10 @@ namespace Client // Note: actual namespace depends on the project name.
     {
         static void Main(string[] args)
         {
+            AnsiConsole.Write(
+new FigletText("Welcome")
+.Centered()
+.Color(Color.Gold1));
             var userInput = AnsiConsole.Prompt(
     new SelectionPrompt<string>()
         .Title("What's your [green]option[/]?")

@@ -41,9 +41,9 @@ namespace Client
             {
                 var result = JsonSerializer.Deserialize<List<string>>(listResponse, options);
                 Categories.ListCategories(result);
-                Console.WriteLine("Please select number of category to edit");
+                AnsiConsole.Write(new Markup("Please select number of category to [green]edit :[/]"));
                 input = Console.ReadLine();
-                Console.WriteLine("If you want to delete it enter x or enter new name to edit it");
+                AnsiConsole.Write(new Markup("If you want to [red]delete it enter x[/] or enter new name to edit it:"));
                 string newName = Console.ReadLine();
                 if (string.IsNullOrEmpty(newName))
                     throw new InvalidOperationException("Cant be empty");
