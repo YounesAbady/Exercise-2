@@ -9,6 +9,7 @@ namespace Client
     internal class DataHandler
     {
         static int counter;
+        private static string _baseAdress = "https://localhost:7018";
         public static void ListRecipesUi(List<Recipe> recipes)
         {
             int recipesCounter = 1;
@@ -48,7 +49,7 @@ namespace Client
             var client = new HttpClient();
             var jsonCategory = JsonSerializer.Serialize(category);
             var content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
-            var request = client.PostAsync($"https://localhost:7018/api/add-category/{category}", content);
+            var request = client.PostAsync($"{_baseAdress}/api/add-category/{category}", content);
             var response = request.Result;
             if (request.IsCompletedSuccessfully)
                 AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));
@@ -81,7 +82,7 @@ namespace Client
                 if (input == "x") break;
                 recipe.Instructions.Add(input);
             }
-            var listRequest = client.GetStringAsync("https://localhost:7018/api/list-categories");
+            var listRequest = client.GetStringAsync($"{_baseAdress}/api/list-categories");
             var listResponse = listRequest.Result;
             if (listResponse is not null)
             {
@@ -99,7 +100,7 @@ namespace Client
             input = null;
             var jsonRecipe = JsonSerializer.Serialize(recipe);
             var content = new StringContent(jsonRecipe, Encoding.UTF8, "application/json");
-            var request = client.PostAsync($"https://localhost:7018/api/add-recipe/{jsonRecipe}", content);
+            var request = client.PostAsync($"{_baseAdress}/api/add-recipe/{jsonRecipe}", content);
             var response = request.Result;
             if (request.IsCompletedSuccessfully)
                 AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));
@@ -113,7 +114,7 @@ namespace Client
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
             var client = new HttpClient();
-            var listRequest = client.GetStringAsync("https://localhost:7018/api/list-categories");
+            var listRequest = client.GetStringAsync($"{_baseAdress}/api/list-categories");
             var listResponse = listRequest.Result;
             if (listResponse is not null)
             {
@@ -130,7 +131,7 @@ namespace Client
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
             var client = new HttpClient();
-            var listRequest = client.GetStringAsync("https://localhost:7018/api/list-recipes");
+            var listRequest = client.GetStringAsync($"{_baseAdress}/api/list-recipes");
             var listResponse = listRequest.Result;
             if (listResponse is not null)
             {
@@ -151,7 +152,7 @@ namespace Client
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
             var client = new HttpClient();
-            var listRequest = client.GetStringAsync("https://localhost:7018/api/list-recipes");
+            var listRequest = client.GetStringAsync($"{_baseAdress}/api/list-recipes");
             var listResponse = listRequest.Result;
             if (listResponse is not null)
             {
@@ -248,7 +249,7 @@ namespace Client
                         break;
                     case "[red]Delete Recipe[/]":
                         client = new HttpClient();
-                        var deleteRequest = client.DeleteAsync($"https://localhost:7018/api/delete-recipe/{oldRecipe.Id}");
+                        var deleteRequest = client.DeleteAsync($"{_baseAdress}/api/delete-recipe/{oldRecipe.Id}");
                         var deleteResponse = deleteRequest.Result;
                         if (deleteRequest.IsCompletedSuccessfully)
                         {
@@ -264,7 +265,7 @@ namespace Client
                 {
                     var jsonRecipe = JsonSerializer.Serialize(oldRecipe);
                     var content = new StringContent(jsonRecipe, Encoding.UTF8, "application/json");
-                    var request = client.PutAsync($"https://localhost:7018/api/update-recipe/{jsonRecipe}/{oldRecipe.Id}", content);
+                    var request = client.PutAsync($"{_baseAdress}/api/update-recipe/{jsonRecipe}/{oldRecipe.Id}", content);
                     var response = request.Result;
                     if (request.IsCompletedSuccessfully)
                         AnsiConsole.Write(new Markup("[green]Done ![/]\n\n"));

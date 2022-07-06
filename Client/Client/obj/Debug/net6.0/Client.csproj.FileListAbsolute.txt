@@ -34,3 +34,6 @@ D:\Finall\exercise-2\Client\Client\obj\Debug\net6.0\refint\Client.dll
 D:\Finall\exercise-2\Client\Client\obj\Debug\net6.0\Client.pdb
 D:\Finall\exercise-2\Client\Client\obj\Debug\net6.0\Client.genruntimeconfig.cache
 D:\Finall\exercise-2\Client\Client\obj\Debug\net6.0\ref\Client.dll
+D:\Finall\exercise-2\Client\Client\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Abstractions.dll
+D:\Finall\exercise-2\Client\Client\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Features.dll
+D:\Finall\exercise-2\Client\Client\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll

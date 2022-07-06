@@ -8,6 +8,7 @@ namespace Client
 {
     internal class Categories
     {
+        private static string _baseAdress = "https://localhost:7018";
         public static List<string> CategoriesNames { get; set; } = new List<string>();
         public static void ListCategories(List<string> categories)
         {
@@ -33,7 +34,7 @@ namespace Client
             };
             var client = new HttpClient();
             string input = null;
-            var listRequest = client.GetStringAsync("https://localhost:7018/api/list-categories");
+            var listRequest = client.GetStringAsync($"{_baseAdress}/api/list-categories");
             var listResponse = listRequest.Result;
             if (listResponse is not null)
             {
@@ -45,7 +46,7 @@ namespace Client
                 string newName = Console.ReadLine();
                 if (newName == "x")
                 {
-                    var request = client.DeleteAsync($"https://localhost:7018/api/delete-category/{result[int.Parse(input) - 1]}");
+                    var request = client.DeleteAsync($"{_baseAdress}/api/delete-category/{result[int.Parse(input) - 1]}");
                     var response = request.Result;
                     if (request.IsCompletedSuccessfully)
                         AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));
@@ -54,7 +55,7 @@ namespace Client
                 {
                     var jsonCategory = JsonSerializer.Serialize(newName);
                     var content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
-                    var request = client.PutAsync($"https://localhost:7018/api/update-category/{input}/{newName}", content);
+                    var request = client.PutAsync($"{_baseAdress}/api/update-category/{input}/{newName}", content);
                     var response = request.Result;
                     if (request.IsCompletedSuccessfully)
                         AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));
