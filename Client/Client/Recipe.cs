@@ -20,7 +20,6 @@ namespace Client
             Instructions = instructions;
             Categories = categories;
         }
-
         [JsonProperty("Id")]
         public Guid Id { get; set; }
         [JsonProperty("Title")]
@@ -28,7 +27,6 @@ namespace Client
         [JsonProperty("Ingredients")]
         public List<string> Ingredients { get; set; } = new List<string>();
         [JsonProperty("Instructions")]
-
         public List<string> Instructions { get; set; } = new List<string>();
         [JsonProperty("Categories")]
         public List<string> Categories { get; set; } = new List<string>();

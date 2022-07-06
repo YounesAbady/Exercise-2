@@ -29,7 +29,6 @@ namespace Client
                 {
                     instructionsNode.AddNode($"{counter}-{instructions}");
                     counter++;
-
                 }
                 counter = 1;
                 var categoriesNode = recipeTitle.AddNode("[red]Categories:[/]");
@@ -75,7 +74,6 @@ namespace Client
                 recipe.Ingredients.Add(input);
             }
             input = null;
-
             for (counter = 1; input != "x"; counter++)
             {
                 Console.WriteLine($"Enter instruction number {counter} or x to go to the next step");
@@ -85,7 +83,6 @@ namespace Client
             }
             var listRequest = client.GetStringAsync("https://localhost:7018/api/list-categories");
             var listResponse = listRequest.Result;
-
             if (listResponse is not null)
             {
                 var result = JsonSerializer.Deserialize<List<string>>(listResponse, options);
@@ -99,7 +96,6 @@ namespace Client
                     recipe.Categories.Add(result[int.Parse(input) - 1]);
                 }
             }
-
             input = null;
             var jsonRecipe = JsonSerializer.Serialize(recipe);
             var content = new StringContent(jsonRecipe, Encoding.UTF8, "application/json");
@@ -119,7 +115,6 @@ namespace Client
             var client = new HttpClient();
             var listRequest = client.GetStringAsync("https://localhost:7018/api/list-categories");
             var listResponse = listRequest.Result;
-
             if (listResponse is not null)
             {
                 var result = JsonSerializer.Deserialize<List<string>>(listResponse, options);
@@ -137,7 +132,6 @@ namespace Client
             var client = new HttpClient();
             var listRequest = client.GetStringAsync("https://localhost:7018/api/list-recipes");
             var listResponse = listRequest.Result;
-
             if (listResponse is not null)
             {
                 var result = JsonSerializer.Deserialize<List<Recipe>>(listResponse, options);
@@ -159,7 +153,6 @@ namespace Client
             var client = new HttpClient();
             var listRequest = client.GetStringAsync("https://localhost:7018/api/list-recipes");
             var listResponse = listRequest.Result;
-
             if (listResponse is not null)
             {
                 var result = JsonSerializer.Deserialize<List<Recipe>>(listResponse, options);
@@ -277,7 +270,6 @@ namespace Client
                         AnsiConsole.Write(new Markup("[green]Done ![/]\n\n"));
                 }
             }
-
         }
     }
 }

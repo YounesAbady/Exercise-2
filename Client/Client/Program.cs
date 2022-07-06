@@ -49,7 +49,6 @@ namespace Client // Note: actual namespace depends on the project name.
                         Console.WriteLine("[red]Enter a valid option![/]");
                         break;
                 }
-
                 userInput = AnsiConsole.Prompt(
     new SelectionPrompt<string>()
         .Title("What's your [green]option[/]?")
@@ -62,9 +61,6 @@ namespace Client // Note: actual namespace depends on the project name.
         }));
                 Console.Clear();
             }
-
         }
-
-
     }
 }

@@ -20,7 +20,6 @@ namespace Client
                 var node = root.AddNode($"{counter}-[aqua]{category}[/]");
                 counter++;
             }
-
             // Render the tree
             AnsiConsole.Write(root);
         }
@@ -36,7 +35,6 @@ namespace Client
             string input = null;
             var listRequest = client.GetStringAsync("https://localhost:7018/api/list-categories");
             var listResponse = listRequest.Result;
-
             if (listResponse is not null)
             {
                 var result = JsonSerializer.Deserialize<List<string>>(listResponse, options);

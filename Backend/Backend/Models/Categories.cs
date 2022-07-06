@@ -16,7 +16,6 @@ namespace Backend.Models
                 var node = root.AddNode($"{counter}-[aqua]{category}[/]");
                 counter++;
             }
-
             // Render the tree
             AnsiConsole.Write(root);
         }
