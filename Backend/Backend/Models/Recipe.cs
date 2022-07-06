@@ -18,12 +18,10 @@ namespace Backend.Models
         [JsonProperty("Id")]
         public Guid Id { get; set; }
         [JsonProperty("Title")]
-
         public string Title { get; set; } = string.Empty;
         [JsonProperty("Ingredients")]
         public List<string> Ingredients { get; set; } = new List<string>();
         [JsonProperty("Instructions")]
-
         public List<string> Instructions { get; set; } = new List<string>();
         [JsonProperty("Categories")]
         public List<string> Categories { get; set; } = new List<string>();
