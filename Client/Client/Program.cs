@@ -19,7 +19,6 @@ new FigletText("Welcome")
         .AddChoices(new[] {
                     "For adding a category", "For adding a recipe", "For listing categories",
                     "For listing recipes", "For editing categories","For editing recipes","[red]Close the application[/]"
-
         }));
             string input = null;
             int counter;
@@ -27,7 +26,6 @@ new FigletText("Welcome")
             {
                 switch (userInput)
                 {
-
                     case "For adding a category":
                         DataHandler.AddCategory();
                         break;
@@ -61,7 +59,6 @@ new FigletText("Welcome")
         .AddChoices(new[] {
             "For adding a category", "For adding a recipe", "For listing categories",
             "For listing recipes", "For editing categories","For editing recipes","[red]Close the application[/]"
-
         }));
                 Console.Clear();
             }
