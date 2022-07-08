@@ -8,18 +8,18 @@ namespace Client // Note: actual namespace depends on the project name.
         static void Main(string[] args)
         {
             AnsiConsole.Write(
-new FigletText("Welcome")
-.Centered()
-.Color(Color.Gold1));
+                new FigletText("Welcome")
+                    .Centered()
+                    .Color(Color.Gold1));
             var userInput = AnsiConsole.Prompt(
-    new SelectionPrompt<string>()
-        .Title("What's your [green]option[/]?")
-        .PageSize(7)
-        .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
-        .AddChoices(new[] {
-                    "For adding a category", "For adding a recipe", "For listing categories",
-                    "For listing recipes", "For editing categories","For editing recipes","[red]Close the application[/]"
-        }));
+                new SelectionPrompt<string>()
+                    .Title("What's your [green]option[/]?")
+                    .PageSize(7)
+                    .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
+                    .AddChoices(new[] {
+                        "For adding a category", "For adding a recipe", "For listing categories",
+                        "For listing recipes", "For editing categories","For editing recipes","[red]Close the application[/]"
+                    }));
             string input = null;
             int counter;
             while (userInput != "x")
@@ -52,14 +52,14 @@ new FigletText("Welcome")
                         break;
                 }
                 userInput = AnsiConsole.Prompt(
-    new SelectionPrompt<string>()
-        .Title("What's your [green]option[/]?")
-        .PageSize(10)
-        .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
-        .AddChoices(new[] {
-            "For adding a category", "For adding a recipe", "For listing categories",
-            "For listing recipes", "For editing categories","For editing recipes","[red]Close the application[/]"
-        }));
+                    new SelectionPrompt<string>()
+                        .Title("What's your [green]option[/]?")
+                        .PageSize(10)
+                        .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
+                        .AddChoices(new[] {
+                            "For adding a category", "For adding a recipe", "For listing categories",
+                            "For listing recipes", "For editing categories","For editing recipes","[red]Close the application[/]"
+                        }));
                 Console.Clear();
             }
         }

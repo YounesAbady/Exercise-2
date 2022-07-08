@@ -18,9 +18,9 @@ namespace Client
             table.Centered();
             table.Collapse();
             AnsiConsole.Write(
-    new FigletText("Recipes")
-        .Centered()
-        .Color(Color.Green));
+                new FigletText("Recipes")
+                    .Centered()
+                    .Color(Color.Green));
             table.AddColumn(new TableColumn("[aqua]Title[/]").Centered());
             table.AddColumn(new TableColumn("[aqua]Ingredients[/]").Centered());
             table.AddColumn(new TableColumn("[aqua]Instructions[/]").Centered());

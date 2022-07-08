@@ -255,11 +255,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\Client\\Client\\Client.csproj",
+      "projectUniqueName": "D:\\Finall\\exercise-2\\Client\\Client\\Client.csproj",
       "projectName": "Client",
-      "projectPath": "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\Client\\Client\\Client.csproj",
+      "projectPath": "D:\\Finall\\exercise-2\\Client\\Client\\Client.csproj",
       "packagesPath": "C:\\Users\\youne\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\youne\\OneDrive\\Documents\\GitHub\\Exercise-2\\Client\\Client\\obj\\",
+      "outputPath": "D:\\Finall\\exercise-2\\Client\\Client\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\youne\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -313,6 +313,9 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
