@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Client
 {
     internal class DataHandler
     {
+        public static IConfiguration Config = new ConfigurationBuilder()
+        .AddJsonFile("appSettings.json")
+        .AddEnvironmentVariables()
+        .Build();
+        public static HttpClient Client = new HttpClient();
         static int counter;
-        private static string _baseAdress = "https://localhost:7018";
         public static void ListRecipesUi(List<Recipe> recipes)
         {
             ArgumentNullException.ThrowIfNull(recipes);
@@ -62,10 +65,9 @@ namespace Client
             var category = Console.ReadLine();
             if (string.IsNullOrEmpty(category))
                 throw new InvalidOperationException("Cant be empty");
-            var client = new HttpClient();
             var jsonCategory = JsonSerializer.Serialize(category);
             var content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
-            var request = client.PostAsync($"{_baseAdress}/api/add-category/{category}", content);
+            var request = Client.PostAsync($"{Config["BaseAddress"]}/api/add-category/{category}", content);
             var response = request.Result;
             if (request.IsCompletedSuccessfully)
                 AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));
@@ -78,7 +80,6 @@ namespace Client
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
-            var client = new HttpClient();
             string input = null;
             Recipe recipe = new Recipe();
             AnsiConsole.Write(new Markup("Enter recipe [aqua]name :[/]"));
@@ -104,7 +105,7 @@ namespace Client
                 if (input == "x") break;
                 recipe.Instructions.Add(input);
             }
-            var listRequest = client.GetStringAsync($"{_baseAdress}/api/list-categories");
+            var listRequest = Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-categories");
             var listResponse = listRequest.Result;
             if (listResponse is not null)
             {
@@ -124,7 +125,7 @@ namespace Client
             input = null;
             var jsonRecipe = JsonSerializer.Serialize(recipe);
             var content = new StringContent(jsonRecipe, Encoding.UTF8, "application/json");
-            var request = client.PostAsync($"{_baseAdress}/api/add-recipe/{jsonRecipe}", content);
+            var request = Client.PostAsync($"{Config["BaseAddress"]}/api/add-recipe/{jsonRecipe}", content);
             var response = request.Result;
             if (request.IsCompletedSuccessfully)
                 AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));
@@ -137,8 +138,7 @@ namespace Client
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
-            var client = new HttpClient();
-            var listRequest = client.GetStringAsync($"{_baseAdress}/api/list-categories");
+            var listRequest = Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-categories");
             var listResponse = listRequest.Result;
             if (listResponse is not null)
             {
@@ -154,8 +154,7 @@ namespace Client
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
-            var client = new HttpClient();
-            var listRequest = client.GetStringAsync($"{_baseAdress}/api/list-recipes");
+            var listRequest = Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-recipes");
             var listResponse = listRequest.Result;
             if (listResponse is not null)
             {
@@ -175,8 +174,7 @@ namespace Client
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
-            var client = new HttpClient();
-            var listRequest = client.GetStringAsync($"{_baseAdress}/api/list-recipes");
+            var listRequest = Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-recipes");
             var listResponse = listRequest.Result;
             if (listResponse is not null)
             {
@@ -284,8 +282,7 @@ namespace Client
                         }
                         break;
                     case "[red]Delete Recipe[/]":
-                        client = new HttpClient();
-                        var deleteRequest = client.DeleteAsync($"{_baseAdress}/api/delete-recipe/{oldRecipe.Id}");
+                        var deleteRequest = Client.DeleteAsync($"{Config["BaseAddress"]}/api/delete-recipe/{oldRecipe.Id}");
                         var deleteResponse = deleteRequest.Result;
                         if (deleteRequest.IsCompletedSuccessfully)
                         {
@@ -301,7 +298,7 @@ namespace Client
                 {
                     var jsonRecipe = JsonSerializer.Serialize(oldRecipe);
                     var content = new StringContent(jsonRecipe, Encoding.UTF8, "application/json");
-                    var request = client.PutAsync($"{_baseAdress}/api/update-recipe/{jsonRecipe}/{oldRecipe.Id}", content);
+                    var request = Client.PutAsync($"{Config["BaseAddress"]}/api/update-recipe/{jsonRecipe}/{oldRecipe.Id}", content);
                     var response = request.Result;
                     if (request.IsCompletedSuccessfully)
                         AnsiConsole.Write(new Markup("[green]Done ![/]\n\n"));

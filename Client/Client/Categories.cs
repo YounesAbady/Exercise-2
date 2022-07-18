@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Client
 {
     internal class Categories
     {
-        private static string _baseAdress = "https://localhost:7018";
+        public static IConfiguration Config = new ConfigurationBuilder()
+        .AddJsonFile("appSettings.json")
+        .AddEnvironmentVariables()
+        .Build();
+        public static HttpClient Client = new HttpClient();
         public static List<string> CategoriesNames { get; set; } = new List<string>();
         public static void ListCategories(List<string> categories)
         {
@@ -33,9 +36,8 @@ namespace Client
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
-            var client = new HttpClient();
             string input = null;
-            var listRequest = client.GetStringAsync($"{_baseAdress}/api/list-categories");
+            var listRequest = Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-categories");
             var listResponse = listRequest.Result;
             if (listResponse is not null)
             {
@@ -49,7 +51,7 @@ namespace Client
                     throw new InvalidOperationException("Cant be empty");
                 if (newName == "x")
                 {
-                    var request = client.DeleteAsync($"{_baseAdress}/api/delete-category/{result[int.Parse(input) - 1]}");
+                    var request = Client.DeleteAsync($"{Config["BaseAddress"]}/api/delete-category/{result[int.Parse(input) - 1]}");
                     var response = request.Result;
                     if (request.IsCompletedSuccessfully)
                         AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));
@@ -58,7 +60,7 @@ namespace Client
                 {
                     var jsonCategory = JsonSerializer.Serialize(newName);
                     var content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
-                    var request = client.PutAsync($"{_baseAdress}/api/update-category/{input}/{newName}", content);
+                    var request = Client.PutAsync($"{Config["BaseAddress"]}/api/update-category/{input}/{newName}", content);
                     var response = request.Result;
                     if (request.IsCompletedSuccessfully)
                         AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));

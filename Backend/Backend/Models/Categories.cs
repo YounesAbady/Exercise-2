@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using Spectre.Console;
-
 namespace Backend.Models
 {
     public class Categories
