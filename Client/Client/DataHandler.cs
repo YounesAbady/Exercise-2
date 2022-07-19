@@ -59,7 +59,7 @@ namespace Client
             }
             AnsiConsole.Write(table);
         }
-        public static void AddCategory()
+        public static async Task AddCategory()
         {
             AnsiConsole.Write(new Markup("Enter category [aqua]name :[/]"));
             var category = Console.ReadLine();
@@ -67,12 +67,11 @@ namespace Client
                 throw new InvalidOperationException("Cant be empty");
             var jsonCategory = JsonSerializer.Serialize(category);
             var content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
-            var request = Client.PostAsync($"{Config["BaseAddress"]}/api/add-category/{category}", content);
-            var response = request.Result;
-            if (request.IsCompletedSuccessfully)
+            var request = await Client.PostAsync($"{Config["BaseAddress"]}/api/add-category/{category}", content);
+            if (request.IsSuccessStatusCode)
                 AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));
         }
-        public static void AddRecipe()
+        public static async Task AddRecipe()
         {
             var options = new JsonSerializerOptions
             {
@@ -105,11 +104,10 @@ namespace Client
                 if (input == "x") break;
                 recipe.Instructions.Add(input);
             }
-            var listRequest = Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-categories");
-            var listResponse = listRequest.Result;
-            if (listResponse is not null)
+            var listRequest = await Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-categories");
+            if (listRequest is not null)
             {
-                var result = JsonSerializer.Deserialize<List<string>>(listResponse, options);
+                var result = JsonSerializer.Deserialize<List<string>>(listRequest, options);
                 Categories.ListCategories(result);
                 input = null;
                 while (input != "x")
@@ -125,12 +123,11 @@ namespace Client
             input = null;
             var jsonRecipe = JsonSerializer.Serialize(recipe);
             var content = new StringContent(jsonRecipe, Encoding.UTF8, "application/json");
-            var request = Client.PostAsync($"{Config["BaseAddress"]}/api/add-recipe/{jsonRecipe}", content);
-            var response = request.Result;
-            if (request.IsCompletedSuccessfully)
+            var request = await Client.PostAsync($"{Config["BaseAddress"]}/api/add-recipe/{jsonRecipe}", content);
+            if (request.IsSuccessStatusCode)
                 AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));
         }
-        public static void ListCategories()
+        public static async Task ListCategories()
         {
             var options = new JsonSerializerOptions
             {
@@ -138,15 +135,14 @@ namespace Client
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
-            var listRequest = Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-categories");
-            var listResponse = listRequest.Result;
-            if (listResponse is not null)
+            var listRequest = await Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-categories");
+            if (listRequest is not null)
             {
-                var result = JsonSerializer.Deserialize<List<string>>(listResponse, options);
+                var result = JsonSerializer.Deserialize<List<string>>(listRequest, options);
                 Categories.ListCategories(result);
             }
         }
-        public static void ListRecipesWeb()
+        public static async Task ListRecipesWeb()
         {
             var options = new JsonSerializerOptions
             {
@@ -154,15 +150,14 @@ namespace Client
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
-            var listRequest = Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-recipes");
-            var listResponse = listRequest.Result;
-            if (listResponse is not null)
+            var listRequest = await Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-recipes");
+            if (listRequest is not null)
             {
-                var result = JsonSerializer.Deserialize<List<Recipe>>(listResponse, options);
+                var result = JsonSerializer.Deserialize<List<Recipe>>(listRequest, options);
                 DataHandler.ListRecipesUi(result);
             }
         }
-        public static void EditRecipes()
+        public static async Task EditRecipes()
         {
             bool deleted = false;
             ListRecipesWeb();
@@ -174,21 +169,20 @@ namespace Client
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
             };
-            var listRequest = Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-recipes");
-            var listResponse = listRequest.Result;
-            if (listResponse is not null)
+            var listRequest = await Client.GetStringAsync($"{Config["BaseAddress"]}/api/list-recipes");
+            if (listRequest is not null)
             {
-                var result = JsonSerializer.Deserialize<List<Recipe>>(listResponse, options);
+                var result = JsonSerializer.Deserialize<List<Recipe>>(listRequest, options);
                 Recipe oldRecipe = result[recipeNumber];
-                var userInput = AnsiConsole.Prompt(
-        new SelectionPrompt<string>()
-            .Title("What do you want to [green]EDIT[/]?")
-            .PageSize(7)
-            .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
-            .AddChoices(new[] {
+             var userInput = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                .Title("What do you want to [green]EDIT[/]?")
+                .PageSize(7)
+                .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
+                .AddChoices(new[] {
                                 "Title", "Ingredients", "Instructions",
                                 "Categories", "[red]Delete Recipe[/]"
-            }));
+                }));
                 switch (userInput)
                 {
                     case "Title":
@@ -282,9 +276,8 @@ namespace Client
                         }
                         break;
                     case "[red]Delete Recipe[/]":
-                        var deleteRequest = Client.DeleteAsync($"{Config["BaseAddress"]}/api/delete-recipe/{oldRecipe.Id}");
-                        var deleteResponse = deleteRequest.Result;
-                        if (deleteRequest.IsCompletedSuccessfully)
+                        var deleteRequest = await Client.DeleteAsync($"{Config["BaseAddress"]}/api/delete-recipe/{oldRecipe.Id}");
+                        if (deleteRequest.IsSuccessStatusCode)
                         {
                             AnsiConsole.Write(new Markup("[green]Done !![/]\n\n"));
                             deleted = true;
@@ -298,9 +291,8 @@ namespace Client
                 {
                     var jsonRecipe = JsonSerializer.Serialize(oldRecipe);
                     var content = new StringContent(jsonRecipe, Encoding.UTF8, "application/json");
-                    var request = Client.PutAsync($"{Config["BaseAddress"]}/api/update-recipe/{jsonRecipe}/{oldRecipe.Id}", content);
-                    var response = request.Result;
-                    if (request.IsCompletedSuccessfully)
+                    var request = await Client.PutAsync($"{Config["BaseAddress"]}/api/update-recipe/{jsonRecipe}/{oldRecipe.Id}", content);
+                    if (request.IsSuccessStatusCode)
                         AnsiConsole.Write(new Markup("[green]Done ![/]\n\n"));
                 }
             }

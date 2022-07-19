@@ -5,7 +5,7 @@ namespace Client // Note: actual namespace depends on the project name.
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             AnsiConsole.Write(
                 new FigletText("Welcome")
@@ -27,25 +27,25 @@ namespace Client // Note: actual namespace depends on the project name.
                 switch (userInput)
                 {
                     case "For adding a category":
-                        DataHandler.AddCategory();
+                        await DataHandler.AddCategory();
                         break;
                     case "For adding a recipe":
-                        DataHandler.AddRecipe();
+                        await DataHandler.AddRecipe();
                         break;
                     case "For listing categories":
-                        DataHandler.ListCategories();
+                        await DataHandler.ListCategories();
                         break;
                     case "For listing recipes":
-                        DataHandler.ListRecipesWeb();
+                        await DataHandler.ListRecipesWeb();
                         break;
                     case "For editing categories":
-                        Categories.EditCategories();
+                        await Categories.EditCategories();
                         break;
                     case "[red]Close the application[/]":
                         Environment.Exit(0);
                         break;
                     case "For editing recipes":
-                        DataHandler.EditRecipes();
+                        await DataHandler.EditRecipes();
                         break;
                     default:
                         Console.WriteLine("[red]Enter a valid option![/]");
